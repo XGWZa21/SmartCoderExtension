@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.ComponentModel;
 using Task = System.Threading.Tasks.Task;
+
 namespace SmartCoderExtension.Controls
 {
     public partial class CodeAssistantControl : UserControl
@@ -15,8 +16,6 @@ namespace SmartCoderExtension.Controls
         }
 
         private readonly DeepSeekClient _client = new DeepSeekClient();
-
-
 
         private async void Generate_Click(object sender, RoutedEventArgs e)
         {

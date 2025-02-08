@@ -1,4 +1,6 @@
 ﻿// Controls/DeepSeekClient.cs
+using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,11 +34,22 @@ namespace SmartCoderExtension.Services
                 Encoding.UTF8,
                 "application/json");
 
-            var response = await _client.PostAsync(Constants.ApiEndpoint, content);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                Debug.WriteLine("发送请求: " + JsonConvert.SerializeObject(request));
+                var response = await _client.PostAsync(Constants.ApiEndpoint, content); // 在此行设置断点
+                response.EnsureSuccessStatusCode();
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            return JObject.Parse(jsonResponse)["choices"][0]["message"]["content"].ToString();
+                var jsonResponse = await response.Content.ReadAsStringAsync(); // 在此行设置断点
+                Debug.WriteLine("收到响应: " + jsonResponse);
+                return JObject.Parse(jsonResponse)["choices"][0]["message"]["content"].ToString();
+            }
+            catch (Exception ex)
+            {
+                // 添加日志记录
+                Debug.WriteLine($"API 调用失败: {ex.Message}");
+                throw;
+            }
         }
     }
 }

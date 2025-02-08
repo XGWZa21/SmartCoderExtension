@@ -3,25 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0" xmlns:viewmodels="clr-namespace:SmartCoderExtension.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CodeAssistantViewModel}"
-             Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
-             Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
+             xmlns:viewmodels="clr-namespace:SmartCoderExtension.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:CodeAssistantViewModel, IsDesignTimeCreatable=True}"
+             Background="White"
+             Foreground="Black"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow">
 
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Height="300" VerticalAlignment="Top">
+
+            <Menu>
+                <MenuItem Header="文件">
+                    <MenuItem Header="新建" Command="{Binding NewCommand}" />
+                    <MenuItem Header="打开" Command="{Binding OpenCommand}" />
+                    <MenuItem Header="退出" Command="{Binding ExitCommand}" />
+                </MenuItem>
+            </Menu>
+
+            <ListView Name="TrackingListView" Width="300" Height="200">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="项目" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="状态" DisplayMemberBinding="{Binding Status}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+
+
             <!-- 绑定 SomeText 属性 -->
             <TextBlock Text="{Binding SomeText, FallbackValue='默认文本'}" />
+            <Button Content="Click me!" Click="button1_Click" Width="120" Height="16" x:Name="button1"
+                    AutomationProperties.AutomationId="InvokeButton" />
 
             <TextBlock Margin="10" HorizontalAlignment="Center">CodeAssistantWindow</TextBlock>
 
             <!-- 绑定 CompartmentName 属性，确保正确绑定 -->
             <TextBlock Text="{Binding CompartmentName, FallbackValue='默认名称'}" />
 
+
+
             <!-- 点击按钮时调用 button1_Click 方法 -->
-            <Button Content="Click me!" Click="button1_Click" Width="120" Height="80" Name="button1"/>
         </StackPanel>
     </Grid>
 </UserControl>

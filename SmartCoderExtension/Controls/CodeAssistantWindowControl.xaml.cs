@@ -1,8 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using SmartCoderExtension.ViewModels;
 
 namespace SmartCoderExtension.Controls
 {
@@ -11,10 +13,14 @@ namespace SmartCoderExtension.Controls
     /// </summary>
     public partial class CodeAssistantWindowControl : UserControl
     {
-        public CodeAssistantWindowControl()
+
+
+        // 点击按钮时触发的事件
+        private void button1_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-            this.DataContext = new CodeAssistantViewModel(); // 绑定到 ViewModel
+            MessageBox.Show(
+                string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
+                "CodeAssistantWindow");
         }
 
         // ViewModel 用于处理数据
@@ -44,14 +50,6 @@ namespace SmartCoderExtension.Controls
 
             public Color TableControlBackground { get; set; } = Colors.LightGray;
             public double RotateAngle { get; set; } = 45; // 默认值
-        }
-
-        // 点击按钮时触发的事件
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(
-                string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
-                "CodeAssistantWindow");
         }
     }
 }
